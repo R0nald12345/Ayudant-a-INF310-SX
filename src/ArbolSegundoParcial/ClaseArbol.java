@@ -5,6 +5,7 @@
  */
 package ArbolSegundoParcial;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -152,13 +153,111 @@ public class ClaseArbol {
             if (nodoAux.izq != null) {
                 colaLista.add(nodoAux.izq);
             }
+            
             if (nodoAux.der != null) {
                 colaLista.add(nodoAux.der);
             }
         }
     }
-//
-//18. A1.sumarNivel(L1) : Método que encuentra en la Lista de acumuladores por nivel L1, la suma de los elementos de cada nivel
+
+    //Eliminar NOdo de un Arbol
+    //A1.eliminar(x) : Método que elimina el elemento x, del árbol A1.
+    public void eliminar(int x) {
+        raiz = eliminar(raiz, x);
+    }
+
+    public NodoBinario eliminar(NodoBinario p, int x) { //eliminar el 100
+        if (p == null) { //si mi arbol esta vacio
+            return null;
+        }
+        if (x == p.dato) { // si mi arbol tiene Un Dato 
+            return eliminarNodo(p);
+        }
+        if (x < p.dato) {
+            p.izq = eliminar(p.izq, x);
+        } else {
+            p.der = eliminar(p.der, x);
+        }
+        return p;
+    }
+
+    public NodoBinario eliminarNodo(NodoBinario p) {
+        if (p.izq == null && p.der == null) { //Caso 0
+            return null;
+        }
+        //Caso 1
+        if (p.izq != null && p.der == null) {
+            return p.izq;
+        }
+        if (p.izq == null && p.der != null) {
+            return p.der;
+        }
+        //Caso 2
+        int y = inmediatoSuperior(p.der);
+        p.dato = y;
+        p.der = eliminar(p.der, y);
+        return p;
+    }
+
+    public int inmediatoSuperior(NodoBinario p) {
+        if (p.izq == null) {
+            return p.dato;
+        } else {
+            return inmediatoSuperior(p.izq);
+        }
+    }
+    
+    public NodoBinario obtenerMenorNodo(){
+        NodoBinario aux = this.raiz;
+        while(aux.izq != null){
+            aux = aux.izq;
+        }
+        return aux;
+    }
+    
+    
+    public NodoBinario obtenerMayorNodo(){
+        NodoBinario aux = this.raiz;
+        while(aux.der != null){
+            aux = aux.der;
+        }
+        return aux; 
+    }
+    
+    public void eliminarMenorNodo(){
+        NodoBinario menor = obtenerMenorNodo();
+        eliminarNodo(menor);
+    }
+    
+    public void eliminarMayorNodo(){
+        NodoBinario mayor = obtenerMayorNodo();
+        eliminarNodo(mayor);
+    }
+    
+    public void eliminarDeUnaLista(ArrayList<Integer> a){
+        eliminarDeUnaListaRecursivo(raiz, a);
+    }
+    
+    
+    private NodoBinario eliminarDeUnaListaRecursivo(NodoBinario raizAux,ArrayList<Integer> a){
+        //SI mi arcbol es Vacio
+        if(raizAux == null){
+            return null;
+        }
+        
+        //Si mi arbol tiene un NOdo
+        if(isHijo(raizAux )){
+            for (int i = 0; i < a.size(); i++) {
+                if(a.get(i) == raizAux.dato ){
+                    eliminar(a.get(i));
+                }
+            }
+        }
+       return raizAux; 
+    }
+    
+//    public void void
+    
 
     public static void main(String[] args) {
         ClaseArbol a1 = new ClaseArbol();
@@ -180,6 +279,10 @@ public class ClaseArbol {
         a1.mostrarNivel();
         System.out.println("");
 
+        a1.RecorrridoInOrden();
+//        a1.eliminar(eliminar);
+        System.out.println("");
+        a1.RecorrridoInOrden();
     }
 
 }
