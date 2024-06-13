@@ -44,6 +44,7 @@ public class ClaseArbol {
 
     public void RecorrridoInOrden() {
         RecorridoInOrdenRecursivo(raiz);
+        System.out.println("");
     }
 
     private void RecorridoInOrdenRecursivo(NodoBinario raizAuxiliar) {
@@ -57,7 +58,7 @@ public class ClaseArbol {
         RecorridoInOrdenRecursivo(raizAuxiliar.der);
     }
 
-    public boolean isHijo(NodoBinario r) {
+    public boolean isHoja(NodoBinario r) {
         return r.izq == null && r.der == null;
     }
 
@@ -71,7 +72,7 @@ public class ClaseArbol {
             return 0;
         }
         //Si mi arbol tiene 1 NOdo
-        if (isHijo(raizAuxiliar)) {
+        if (isHoja(raizAuxiliar)) {
             return 1;
         }
         //Caso General
@@ -89,7 +90,7 @@ public class ClaseArbol {
             return 0;
         }
 
-        if (isHijo(raizAuxiliar)) {
+        if (isHoja(raizAuxiliar)) {
             return 1;
         }
         int hi = contarHojasRecursivo(raizAuxiliar.izq);
@@ -105,7 +106,7 @@ public class ClaseArbol {
         if (raizAuxiliar == null) {
             return 0;
         }
-        if (isHijo(raizAuxiliar)) {
+        if (isHoja(raizAuxiliar)) {
             return 0;
         }
 
@@ -127,7 +128,7 @@ public class ClaseArbol {
         if (raizAuxiliar == null) {
             return 0;
         }
-        if (isHijo(raizAuxiliar)) {
+        if (isHoja(raizAuxiliar)) {
             return raizAuxiliar.dato;
         }
         int hi = sumarRecursivo(raizAuxiliar.izq);
@@ -153,11 +154,12 @@ public class ClaseArbol {
             if (nodoAux.izq != null) {
                 colaLista.add(nodoAux.izq);
             }
-            
+
             if (nodoAux.der != null) {
                 colaLista.add(nodoAux.der);
             }
         }
+        System.out.println("");
     }
 
     //Eliminar NOdo de un Arbol
@@ -181,6 +183,40 @@ public class ClaseArbol {
         return p;
     }
 
+    public int inmediatoSuperior(NodoBinario p) {
+        if (p.izq == null) {
+            return p.dato;
+        } else {
+            return inmediatoSuperior(p.izq);
+        }
+    }
+
+    public int obtenerMenorDato() {
+        NodoBinario aux = this.raiz;
+        while (aux.izq != null) {
+            aux = aux.izq;
+        }
+        return aux.dato;
+    }
+
+    public void eliminarMenorElemento() {
+        int menor = obtenerMenorDato();
+        eliminar(menor);
+    }
+
+    public void eliminarMayorNodo() {
+        int mayor = obtenerMayorElemento();
+        eliminar(mayor);
+    }
+
+    public int obtenerMayorElemento() {
+        NodoBinario aux = this.raiz;
+        while (aux.der != null) {
+            aux = aux.der;
+        }
+        return aux.dato;
+    }
+
     public NodoBinario eliminarNodo(NodoBinario p) {
         if (p.izq == null && p.der == null) { //Caso 0
             return null;
@@ -199,66 +235,49 @@ public class ClaseArbol {
         return p;
     }
 
-    public int inmediatoSuperior(NodoBinario p) {
-        if (p.izq == null) {
-            return p.dato;
-        } else {
-            return inmediatoSuperior(p.izq);
-        }
-    }
-    
-    public NodoBinario obtenerMenorNodo(){
-        NodoBinario aux = this.raiz;
-        while(aux.izq != null){
-            aux = aux.izq;
-        }
-        return aux;
-    }
-    
-    
-    public NodoBinario obtenerMayorNodo(){
-        NodoBinario aux = this.raiz;
-        while(aux.der != null){
-            aux = aux.der;
-        }
-        return aux; 
-    }
-    
-    public void eliminarMenorNodo(){
-        NodoBinario menor = obtenerMenorNodo();
-        eliminarNodo(menor);
-    }
-    
-    public void eliminarMayorNodo(){
-        NodoBinario mayor = obtenerMayorNodo();
-        eliminarNodo(mayor);
-    }
-    
-    public void eliminarDeUnaLista(ArrayList<Integer> a){
+    public void eliminarDeUnaLista(ArrayList<Integer> a) {
         eliminarDeUnaListaRecursivo(raiz, a);
     }
-    
-    
-    private NodoBinario eliminarDeUnaListaRecursivo(NodoBinario raizAux,ArrayList<Integer> a){
+
+    private NodoBinario eliminarDeUnaListaRecursivo(NodoBinario raizAux, ArrayList<Integer> a) {
         //SI mi arcbol es Vacio
-        if(raizAux == null){
+        if (raizAux == null) {
             return null;
         }
-        
+
         //Si mi arbol tiene un NOdo
-        if(isHijo(raizAux )){
+        if (isHoja(raizAux)) {
             for (int i = 0; i < a.size(); i++) {
-                if(a.get(i) == raizAux.dato ){
+                if (a.get(i) == raizAux.dato) {
                     eliminar(a.get(i));
                 }
             }
         }
-       return raizAux; 
+        return raizAux;
+    }
+
+    public void eliminarHojas() {
+        raiz = eliminarHojas(raiz);
+    }
+
+    private NodoBinario eliminarHojas(NodoBinario p) {
+        if (p == null) {
+            return null;
+        } else if (isHoja(p)) {
+            return null;
+        } else {
+            NodoBinario i = eliminarHojas(p.izq);
+            p.izq = i;
+            NodoBinario d = eliminarHojas(p.der);
+            p.der = d;
+            return p;
+        }
     }
     
-//    public void void
-    
 
+
+
+//    public void void
     public static void main(String[] args) {
         ClaseArbol a1 = new ClaseArbol();
 
@@ -269,6 +288,7 @@ public class ClaseArbol {
         a1.insertar(35);
 //        a1.insertar(85);
 
+        a1.mostrarNivel();
         a1.RecorrridoInOrden();
         System.out.println("");
         System.out.println("Contar Nodos: " + a1.contarLaCantidadNodos());
@@ -277,12 +297,30 @@ public class ClaseArbol {
         System.out.println("Suma de Datos de Nodos: " + a1.sumar());
         System.out.println("--------------");
         a1.mostrarNivel();
-        System.out.println("");
 
+        System.out.println("Ejercicios Para eliminar ");
+        //1.....Eliminando el Dato 15
+        System.out.println("Eliminando el Dato 15");
+        a1.eliminar(15);
         a1.RecorrridoInOrden();
-//        a1.eliminar(eliminar);
-        System.out.println("");
+
+        //2..........
+        System.out.println("Eliminando el mayor");
+        a1.eliminarMayorNodo();
         a1.RecorrridoInOrden();
+        System.out.println("Eliminando el menor");
+        //3...........
+        a1.eliminarMenorElemento();
+        a1.RecorrridoInOrden();
+        System.out.println("Eliminando las hojas de un Arbol");
+        //4...........
+        a1.eliminarHojas();
+        a1.RecorrridoInOrden();
+        
+        //5 ... el ejercicio 5to se los dejo de Tarea ya les ayude con 14 ejercicios ;v
+        
+
+
     }
 
 }
