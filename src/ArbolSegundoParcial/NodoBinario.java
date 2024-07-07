@@ -17,13 +17,5 @@ public class NodoBinario {
         this.der = null;
     }
     
-    public int cantHijo(){
-        if(izq != null || der != null){
-            return 1;
-        }
-        if(izq == null && der == null){
-            return 0;
-        }
-        return 2;
-    }
+
 }

@@ -17,25 +17,29 @@ public class ListaArbolBinario {
     ArrayList<ClaseArbol> listaArbol;
     
     //Constructor
-    public ListaArbolBinario(int cantidad){
+    public ListaArbolBinario(int cantidad){  //5
         listaArbol = new ArrayList<>();
         for (int i = 0; i < cantidad; i++) {
             listaArbol.add(new ClaseArbol());
         }
     }
     
+                            //  1           50
     public void insertarDato(int posLista, int x){
         listaArbol.get(posLista).insertar(x);
     }
     
+                                //   1
     public void RecorridoInORden(int posLista){
         listaArbol.get(posLista).RecorrridoInOrden();
     }
     
+                                      // 1  
     public int cantidadNodosPosLista(int posLista){
         return listaArbol.get(posLista).contarLaCantidadNodos();
     }
     
+                                        //   1
     public int cantidadNodosIncompletos(int posLista){
         return listaArbol.get(posLista).contarCantidadNodoIncompletos();
     }

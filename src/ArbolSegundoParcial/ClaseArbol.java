@@ -68,7 +68,7 @@ public class ClaseArbol {
     }
 
     private int contarLaCantidadNodosRecursivo(NodoBinario raizAuxiliar) {
-        if (raizAuxiliar == null) {
+        if (raizAuxiliar == null) { //si mi arbol es Vacio
             return 0;
         }
         //Si mi arbol tiene 1 NOdo
@@ -125,10 +125,10 @@ public class ClaseArbol {
     }
 
     private int sumarRecursivo(NodoBinario raizAuxiliar) {
-        if (raizAuxiliar == null) {
+        if (raizAuxiliar == null) { //si mi arbol es Vacio
             return 0;
         }
-        if (isHoja(raizAuxiliar)) {
+        if (isHoja(raizAuxiliar)) { //si mi arbol tiene un solo Nodo
             return raizAuxiliar.dato;
         }
         int hi = sumarRecursivo(raizAuxiliar.izq);
@@ -147,7 +147,7 @@ public class ClaseArbol {
             return;
         }
         LinkedList<NodoBinario> colaLista = new LinkedList<>();
-        colaLista.add(raiz);
+        colaLista.add(raiz);// se carga el 20
         while (!colaLista.isEmpty()) {
             NodoBinario nodoAux = colaLista.removeFirst();
             System.out.print(nodoAux.dato + " ");
@@ -289,33 +289,7 @@ public class ClaseArbol {
 //        a1.insertar(85);
 
         a1.mostrarNivel();
-        a1.RecorrridoInOrden();
-        System.out.println("");
-        System.out.println("Contar Nodos: " + a1.contarLaCantidadNodos());
-        System.out.println("Contar Hojas: " + a1.contarHojas());
-        System.out.println("Contar la cantidad de Nodo Imcpletos: " + a1.contarCantidadNodoIncompletos());
-        System.out.println("Suma de Datos de Nodos: " + a1.sumar());
-        System.out.println("--------------");
-        a1.mostrarNivel();
-
-        System.out.println("Ejercicios Para eliminar ");
-        //1.....Eliminando el Dato 15
-        System.out.println("Eliminando el Dato 15");
-        a1.eliminar(15);
-        a1.RecorrridoInOrden();
-
-        //2..........
-        System.out.println("Eliminando el mayor");
-        a1.eliminarMayorNodo();
-        a1.RecorrridoInOrden();
-        System.out.println("Eliminando el menor");
-        //3...........
-        a1.eliminarMenorElemento();
-        a1.RecorrridoInOrden();
-        System.out.println("Eliminando las hojas de un Arbol");
-        //4...........
-        a1.eliminarHojas();
-        a1.RecorrridoInOrden();
+     
         
         //5 ... el ejercicio 5to se los dejo de Tarea ya les ayude con 14 ejercicios ;v
         
